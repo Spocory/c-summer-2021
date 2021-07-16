@@ -1,0 +1,30 @@
+﻿@model HelloWorld.Models.Product
+
+<!DOCTYPE html>
+
+<html>
+<body>
+  
+    @{ string stockmessage;}
+    @if (@Model.ProductCount == 0)
+    {
+        stockmessage = "Out of Stock";
+    }
+    else
+    {
+        if (@Model.ProductCount == 1)
+        {
+            stockmessage = "Low Stock";
+        }
+        else
+        { return; }
+    }
+
+    Name: @Model.Name <br />
+    Description: @Model.Description  <br />
+    Price: @Model.Price  <br />
+    Count: @Model.ProductCount<br />
+    @stockmessage
+ 
+</body>
+</html>
