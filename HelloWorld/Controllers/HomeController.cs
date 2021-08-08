@@ -7,6 +7,8 @@ using HelloWorld.Models;
 
 namespace HelloWorld.Controllers
 {
+    //[AuthorizeIpAddress]
+    [Logging]
     public class HomeController : Controller
     {
         // GET: Home
@@ -55,5 +57,23 @@ namespace HelloWorld.Controllers
             var products = productRepository.Products;
             return View(products);
         }
+
+        public PartialViewResult IncrementCount()
+        {
+            int count = 0;
+
+            // Check if MyCount exists
+            if (Session["MyCount"] != null)
+            {
+                count = (int)Session["MyCount"];
+                count++;
+            }
+
+            // Create the MyCount session variable
+            Session["MyCount"] = count;
+
+            return new PartialViewResult();
+        }
+
     }
 }

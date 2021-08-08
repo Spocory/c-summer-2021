@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 namespace HelloWorld.Models
 {
-    public class Product
+    public class xProduct
     {
         public int ProductId { get; set; }
         public string Name { get; set; }

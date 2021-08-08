@@ -1,0 +1,18 @@
+﻿@model Ziggle.WebSite.Models.IndexModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Ziggle</h1>
+    <p class="lead">The only way to shop on the Interwebs.</p>
+</div>
+
+<div class="row">
+    @foreach (var category in Model.Categories)
+    {
+        <div class="col-md-4">
+            <h2><a asp-action="category" asp-route-id="@category.Id">@category.Name</a></h2>
+        </div>
+    }
+</div>
