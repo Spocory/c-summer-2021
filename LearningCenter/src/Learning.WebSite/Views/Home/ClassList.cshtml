@@ -1,0 +1,30 @@
+﻿@model Learning.WebSite.Models.ClassListModel
+@{
+    ViewBag.Title = "Classes Available";
+}
+
+<div class="jumbotron">
+    <h1>The Learning WebSite</h1>
+    <p class="lead">Learn Something!</p>
+</div>
+
+
+
+<h1>Classes</h1>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var classx in Model.Classes)
+    {
+        <tr>
+            <td>@classx.Name</td>
+            <td>@classx.Description</td>
+            <td>@classx.Price.ToString("c")</td>
+
+        </tr>
+
+    }
+</table>
