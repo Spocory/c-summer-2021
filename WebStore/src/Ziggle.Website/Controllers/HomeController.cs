@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ziggle.Website.Controllers
 {
@@ -21,14 +22,17 @@ namespace Ziggle.Website.Controllers
         private readonly ICategoryManager categoryManager;
         private readonly IProductManager productManager;
         private readonly IUserManager userManager;
+        private readonly IShoppingCartManager shoppingCartManager;
 
         public HomeController(ICategoryManager categoryManager,
-                              IProductManager productManager,
-                              IUserManager userManager)
+                                IProductManager productManager,
+                                IUserManager userManager,
+                                IShoppingCartManager shoppingCartManager)
         {
             this.categoryManager = categoryManager;
             this.productManager = productManager;
             this.userManager = userManager;
+            this.shoppingCartManager = shoppingCartManager;
         }
         public ActionResult Index()
         {
@@ -38,6 +42,26 @@ namespace Ziggle.Website.Controllers
             var model = new IndexModel { Categories = categories };
             return View(model);
         }
+
+        [Authorize]
+        public ActionResult AddToCart(int id)
+        {
+            var user = JsonConvert.DeserializeObject<Ziggle.WebSite.Models.UserModel>(HttpContext.Session.GetString("User"));
+
+            var item = shoppingCartManager.Add(user.Id, id, 1);
+            var items = shoppingCartManager.GetAll(user.Id)
+                .Select(t => new Ziggle.WebSite.Models.ShoppingCartItem
+                {
+                    ProductId = t.ProductId,
+                    ProductName = t.ProductName,
+                    ProductPrice = t.ProductPrice,
+                    Quantity = t.Quantity
+                })
+                .ToArray();
+            return View(items);
+        }
+
+
 
         public ActionResult Category(int id)
         {

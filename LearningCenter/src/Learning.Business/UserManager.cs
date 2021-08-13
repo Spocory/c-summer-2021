@@ -5,7 +5,7 @@ namespace Learning.Business
     public interface IUserManager
     {
         UserModel LogIn(string email, string password);
-        UserModel Register(string email, string password);
+        UserModel Register(string email, string password, string confirmPassword);
     }
 
     public class UserModel
@@ -35,10 +35,11 @@ namespace Learning.Business
             return new UserModel { Id = user.Id, Name = user.Name };
         }
 
-        public UserModel Register(string email, string password)
+        public UserModel Register(string email, string password, string confirmPassword)
         {
-            var user = userRepository.Register(email, password);
+            var user = userRepository.Register(email, password, confirmPassword);
 
+   
             if (user == null)
             {
                 return null;

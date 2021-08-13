@@ -25,6 +25,19 @@ namespace Ziggle.Business
             this.productRepository = productRepository;
         }
 
+        public ProductModel GetProduct(int productId)
+        {
+            var product = productRepository.GetProduct(productId);
+
+            return new ProductModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Quantity = product.Quantity
+            };
+        }
+
         public ProductModel[] ForCategory(int categoryId)
         {
             return productRepository.ForCategory(categoryId).Select(t =>

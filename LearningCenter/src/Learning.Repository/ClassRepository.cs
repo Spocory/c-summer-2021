@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Learning.Repository
 {
@@ -6,6 +7,8 @@ namespace Learning.Repository
     {
         ClassModel[] Classes { get; }
         ClassModel Class(int classId);
+
+        ClassModel GetClass(int classId);
     }
 
     public class ClassModel
@@ -35,5 +38,23 @@ namespace Learning.Repository
                                                    .First();
             return classx;
         }
+
+
+
+        public ClassModel GetClass(int classId)
+        {
+            return DatabaseAccessor.Instance.Class
+                        .Where(t => t.ClassId == classId)
+                        .Select(t => new ClassModel
+                        {
+                            Id = t.ClassId,
+                            Name = t.ClassName,
+                            Price = t.ClassPrice,
+                            Description = t.ClassDescription
+                        })
+                        .First();
+        }
+
+
     }
 }

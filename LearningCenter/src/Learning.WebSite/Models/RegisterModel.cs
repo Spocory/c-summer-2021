@@ -17,7 +17,7 @@ namespace Learning.WebSite.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "ConfirmPassword")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }

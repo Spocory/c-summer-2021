@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Learning.WebSite.Controllers
 {
@@ -18,14 +20,58 @@ namespace Learning.WebSite.Controllers
     {
         private readonly IClassManager classManager;
         private readonly IUserManager userManager;
+        private readonly IEnrollManager enrollManager;
         public HomeController(IClassManager classManager,
-                              IUserManager userManager)
+                              IUserManager userManager,
+                              IEnrollManager enrollManager)
         {
             this.classManager = classManager;
             this.userManager = userManager;
+            this.enrollManager = enrollManager;
+        }
+
+        [Authorize]
+        public ActionResult studentclasses(int id)
+        {
+            var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
+            if (id != null)
+            {
+                var item = enrollManager.Add(user.Id, id);
+            }
+
+            var items = enrollManager.GetAll(user.Id)
+                    .Select(t => new Learning.WebSite.Models.UserClassModel
+                    {
+                        UserId = t.UserId,
+                        ClassId = t.ClassId
+                  
+                    })
+                    .ToArray();
+            return View(items);
         }
 
 
+
+
+
+        [Authorize]
+        public ActionResult enrollinclass()
+        {
+            var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
+            var items = enrollManager.GetAll(user.Id)
+                                .Select(t => new Learning.WebSite.Models.UserClassModel
+                                {
+                                    UserId = t.UserId,
+                                    ClassId = t.ClassId
+
+                                })
+                                .ToArray();
+            var classes = classManager.Classes
+                                            .Select(t => new Learning.WebSite.Models.ClassModel(t.Id, t.Name, t.Price, t.Description))
+                                            .ToArray();
+            var model = new ClassListModel { Classes = classes };
+            return View(model);
+        }
 
         public ActionResult ClassList()
         {
@@ -167,7 +213,7 @@ namespace Learning.WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = userManager.Register(registerModel.UserName, registerModel.Password);
+                var user = userManager.Register(registerModel.UserName, registerModel.Password, registerModel.ConfirmPassword);
 
                 if (user == null)
                 {

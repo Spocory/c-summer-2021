@@ -34,6 +34,8 @@ namespace Learning.WebSite
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IClassManager, ClassManager>();
             services.AddSingleton<IClassRepository, ClassRepository>();
+            services.AddSingleton<IEnrollManager, EnrollManager>();
+            services.AddSingleton<IEnrollRepository, EnrollRepository>();
             services.AddSession();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -53,8 +55,8 @@ namespace Learning.WebSite
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -16,17 +16,18 @@
         <th>Name</th>
         <th>Description</th>
         <th>Price</th>
+        <th>Enroll</th>
     </tr>
     @foreach (var classx in Model.Classes)
     {
-<tr>
-    <td>@classx.Name</td>
-    <td>@classx.Description</td>
-    <td>@classx.Price.ToString("c")</td>
+        <tr>
+            <td>@classx.Name</td>
+            <td>@classx.Description</td>
+            <td>@classx.Price.ToString("c")</td>
+            <td><a asp-action="studentclasses" asp-route-id="@classx.Id">Enroll Now!</a></td>
 
 
-
-</tr>
+        </tr>
 
     }
 </table>

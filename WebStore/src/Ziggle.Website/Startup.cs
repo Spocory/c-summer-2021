@@ -39,8 +39,9 @@ namespace Ziggle.Website
         options.LoginPath = new PathString("/Home/Login");
         options.AccessDeniedPath = new PathString("/Account/Denied");
     });
-        
 
+            services.AddSingleton<IShoppingCartManager, ShoppingCartManager>();
+            services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddSingleton<IUserManager, UserManager>();
             services.AddSingleton<IUserRepository, UserRepository>();
 
@@ -60,8 +61,9 @@ namespace Ziggle.Website
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

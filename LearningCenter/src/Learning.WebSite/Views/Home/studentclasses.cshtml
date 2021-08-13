@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Learning.WebSite.Models.UserClassModel>
+
+@{
+    ViewBag.Title = "studentclasses";
+}
+
+<h2>studentclasses</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ClassId)
+    </td>
+    <th>
+        @Html.DisplayNameFor(modelItem => item.Name)
+    </th>
+    <th>
+        @Html.DisplayNameFor(modelItem => item.Description)
+    </th>
+    <th>
+        @Html.DisplayNameFor(modelItem => item.Price)
+    </th>
+</tr>
+    }
+
+</table>

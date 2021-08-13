@@ -9,7 +9,7 @@ namespace Learning.Repository
     public interface IUserRepository
     {
         UserModel LogIn(string email, string password);
-        UserModel Register(string email, string password);
+        UserModel Register(string email, string password, string confirmPassword);
     }
 
     public class UserModel
@@ -35,7 +35,7 @@ namespace Learning.Repository
             return new UserModel { Id = user.UserId, Name = user.UserEmail };
         }
 
-        public UserModel Register(string email, string password)
+        public UserModel Register(string email, string password, string confirmPassword)
         {
 
             var userx = DatabaseAccessor.Instance.User
@@ -45,6 +45,12 @@ namespace Learning.Repository
             {
                 return null;
             }
+
+            if (password != confirmPassword)
+            {
+                return null;
+            }
+
 
             var user = DatabaseAccessor.Instance.User
                     .Add(new Learning.ClassDatabase.User

@@ -12,5 +12,7 @@ namespace Ziggle.ProductDatabase
 
         public Product Product { get; set; }
         public User User { get; set; }
+        public string ProductName { get; set; }
+        public decimal ProductPrice { get; set; }
     }
 }

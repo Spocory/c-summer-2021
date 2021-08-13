@@ -7,6 +7,7 @@ namespace Learning.Business
     {
         ClassModel[] Classes { get; }
         ClassModel Class(int classId);
+
     }
 
     public class ClassModel
@@ -23,6 +24,8 @@ namespace Learning.Business
             Price = price;
             Description = description;
         }
+
+
     }
 
     public class ClassManager : IClassManager
@@ -33,6 +36,9 @@ namespace Learning.Business
         {
             this.classRepository = classRepository;
         }
+
+
+
 
         public ClassModel[] Classes
         {
@@ -49,5 +55,21 @@ namespace Learning.Business
             var classModel = classRepository.Class(classId);
             return new ClassModel(classModel.Id, classModel.Name, classModel.Price, classModel.Description);
         }
+
+
+        public ClassModel GetClass(int classId)
+        {
+            var classx = ClassManager.GetClass(classId);
+
+            return new ClassModel(classx.Id,classx.Name,classx.Price,classx.Description)
+            {
+                Id = classx.Id,
+                Name = classx.Name,
+                Price = classx.Price,
+                Description = classx.Description
+            };
+        }
+
+
     }
 }

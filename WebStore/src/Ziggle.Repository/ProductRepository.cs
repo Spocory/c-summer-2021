@@ -31,5 +31,21 @@ namespace Ziggle.Repository
                     })
                     .ToArray();
         }
+
+        public ProductModel GetProduct(int productId)
+        {
+            return DatabaseAccessor.Instance.Product
+                        .Where(t => t.ProductId == productId)
+                        .Select(t => new ProductModel
+                        {
+                            Id = t.ProductId,
+                            Name = t.ProductName,
+                            Price = t.ProductPrice,
+                            Quantity = t.ProductQuantity
+                        })
+                        .First();
+        }
     }
+
+
 }
