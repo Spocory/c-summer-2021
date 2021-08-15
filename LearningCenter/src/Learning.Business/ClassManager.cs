@@ -57,18 +57,18 @@ namespace Learning.Business
         }
 
 
-        public ClassModel GetClass(int classId)
-        {
-            var classx = ClassManager.GetClass(classId);
+        //public ClassModel GetClass(int classId)
+        //{
+        //    var classx = ClassManager.GetClass(classId);
 
-            return new ClassModel(classx.Id,classx.Name,classx.Price,classx.Description)
-            {
-                Id = classx.Id,
-                Name = classx.Name,
-                Price = classx.Price,
-                Description = classx.Description
-            };
-        }
+        //    return new ClassModel(classx.Id,classx.Name,classx.Price,classx.Description)
+        //    {
+        //        Id = classx.Id,
+        //        Name = classx.Name,
+        //        Price = classx.Price,
+        //        Description = classx.Description
+        //    };
+        //}
 
 
     }

@@ -33,17 +33,28 @@ namespace Learning.WebSite.Controllers
         [Authorize]
         public ActionResult studentclasses(int id)
         {
+            if (JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session?.GetString("User")) == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
-            if (id != null)
+    
+
+            if (id != 0)
             {
                 var item = enrollManager.Add(user.Id, id);
             }
 
             var items = enrollManager.GetAll(user.Id)
-                    .Select(t => new Learning.WebSite.Models.UserClassModel
+                    .Select(t => new Learning.WebSite.Models.EnrollModel
                     {
                         UserId = t.UserId,
-                        ClassId = t.ClassId
+                        ClassId = t.ClassId,
+                        Name = t.Name,
+                        Description = t.Description,
+                        Price = t.Price
+                        
                   
                     })
                     .ToArray();
@@ -57,18 +68,15 @@ namespace Learning.WebSite.Controllers
         [Authorize]
         public ActionResult enrollinclass()
         {
-            var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
-            var items = enrollManager.GetAll(user.Id)
-                                .Select(t => new Learning.WebSite.Models.UserClassModel
-                                {
-                                    UserId = t.UserId,
-                                    ClassId = t.ClassId
+            //if ((JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User")) == null))
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
-                                })
-                                .ToArray();
+            var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
             var classes = classManager.Classes
-                                            .Select(t => new Learning.WebSite.Models.ClassModel(t.Id, t.Name, t.Price, t.Description))
-                                            .ToArray();
+                                  .Select(t => new Learning.WebSite.Models.ClassModel(t.Id, t.Name, t.Price, t.Description))
+                                  .ToArray();
             var model = new ClassListModel { Classes = classes };
             return View(model);
         }

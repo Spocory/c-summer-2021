@@ -6,8 +6,8 @@ namespace Learning.Business
     public interface IEnrollManager
     {
         EnrollModel Add(int userId, int classId);
-        bool Remove(int userId, int classId);
         EnrollModel[] GetAll(int userId);
+
     }
 
     public class EnrollModel
@@ -45,29 +45,45 @@ namespace Learning.Business
 
         }
 
-        public EnrollModel[] GetAll(int UserId)
+        public EnrollModel[] GetAll(int userId)
         {
-            var items = enrollRepository.GetAll(UserId)
-                .Select(t => {
-                    var classx = ClassRepository.GetClass(t.ClassId);
+            var itemsx =
+    from c in DatabaseAccessor.Instance.Class
+    join uc in DatabaseAccessor.Instance.UserClass on c.ClassId equals uc.ClassId
+    join u in DatabaseAccessor.Instance.User on uc.UserId equals u.UserId
+    where u.UserId == userId
+    select new EnrollModel
+    {
+        UserId = u.UserId,
+        ClassId = c.ClassId,
+        Name = c.ClassName,
+        Price = c.ClassPrice,
+        Description = c.ClassDescription
+    };
+            var newthings = itemsx.ToArray();
 
-                    return new EnrollModel
-                    {
-                        Name = classx.Name,
-                        Price = classx.Price,
-                        Description = classx.Description
-                    };
-                })
-                .ToArray();
-
-            return items;
+            return (newthings);
         }
 
 
 
-        public bool Remove(int userId, int classId)
-        {
-            return enrollRepository.Remove(userId, classId);
-        }
+
+
+
+
+        //public EnrollModel[] GetAll(int userId)
+        //{
+        //    var items = enrollRepository.GetAll(userId)
+        //        .Select(t => new EnrollModel
+        //        {
+        //            UserId = t.UserId,
+        //            ClassId = t.ClassId,
+        //        })
+        //        .ToArray();
+
+        //    return items;
+        //}
+
+
     }
 }

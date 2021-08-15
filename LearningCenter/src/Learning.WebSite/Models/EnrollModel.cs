@@ -1,6 +1,6 @@
 ﻿namespace Learning.WebSite.Models
 {
-    public class UserClassModel
+    public class EnrollModel
     {
         public int UserId { get; set; }
         public int ClassId { get; set; }
