@@ -1,10 +1,26 @@
 ﻿@model IEnumerable<Learning.WebSite.Models.EnrollModel>
 
 @{
-    ViewBag.Title = "studentclasses";
+    ViewBag.Title = "Registered Classes";
 }
 
-<h2>studentclasses</h2>
+<style>
+    .topmain {
+        background-color: gainsboro;
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-bottom: 20px;
+        text-anchor: start;
+    }
+</style>
+<div class="topmain">
+    <h1>The Learning Center</h1>
+    The Place For Technology Classes.
+    <br />
+    <br />
+
+</div>
+<h2>Registered Classes</h2>
 
 <table class="table">
     <tr>
@@ -28,23 +44,23 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.UserId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ClassId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Price)
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
     }
 
 </table>

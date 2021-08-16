@@ -31,7 +31,14 @@ namespace Learning.Repository
                 return null;
             }
 
-            var item = DatabaseAccessor.Instance.UserClass.Add(
+            if(DatabaseAccessor.Instance.UserClass.Where(t => t.UserId == userId && t.ClassId == classId).Count() > 0)
+            {
+                return null;
+            }
+
+        
+
+        var item = DatabaseAccessor.Instance.UserClass.Add(
                 new Learning.ClassDatabase.UserClass
                 {
                     UserId = userId,
@@ -88,7 +95,7 @@ namespace Learning.Repository
             return (newthings);
         }
 
-
+  
 
 
 

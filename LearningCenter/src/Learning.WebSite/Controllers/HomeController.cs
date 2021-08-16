@@ -61,10 +61,6 @@ namespace Learning.WebSite.Controllers
             return View(items);
         }
 
-
-
-
-
         [Authorize]
         public ActionResult enrollinclass()
         {
@@ -74,11 +70,16 @@ namespace Learning.WebSite.Controllers
             //}
 
             var user = JsonConvert.DeserializeObject<Models.UserModel>(HttpContext.Session.GetString("User"));
+
             var classes = classManager.Classes
                                   .Select(t => new Learning.WebSite.Models.ClassModel(t.Id, t.Name, t.Price, t.Description))
                                   .ToArray();
+
+
+
             var model = new ClassListModel { Classes = classes };
-            return View(model);
+ 
+             return View(model);
         }
 
         public ActionResult ClassList()
@@ -86,6 +87,8 @@ namespace Learning.WebSite.Controllers
             var classes = classManager.Classes
                                             .Select(t => new Learning.WebSite.Models.ClassModel(t.Id, t.Name, t.Price, t.Description))
                                             .ToArray();
+
+
             var model = new ClassListModel { Classes = classes };
             return View(model);
         }
@@ -165,7 +168,7 @@ namespace Learning.WebSite.Controllers
                         AllowRefresh = false,
                         // Refreshing the authentication session should be allowed.
 
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1440),
                         // The time at which the authentication ticket expires. A 
                         // value set here overrides the ExpireTimeSpan option of 
                         // CookieAuthenticationOptions set with AddCookie.

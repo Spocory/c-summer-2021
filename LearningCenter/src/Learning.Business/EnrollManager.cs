@@ -30,7 +30,10 @@ namespace Learning.Business
 
         public EnrollModel Add(int userId, int classId)
         {
-            
+            if (DatabaseAccessor.Instance.UserClass.Where(t => t.UserId == userId && t.ClassId == classId).Count() > 0)
+            {
+                return null;
+            }
             if (classId != 0)
             {
                 var item = enrollRepository.Add(userId, classId);
@@ -64,26 +67,6 @@ namespace Learning.Business
 
             return (newthings);
         }
-
-
-
-
-
-
-
-        //public EnrollModel[] GetAll(int userId)
-        //{
-        //    var items = enrollRepository.GetAll(userId)
-        //        .Select(t => new EnrollModel
-        //        {
-        //            UserId = t.UserId,
-        //            ClassId = t.ClassId,
-        //        })
-        //        .ToArray();
-
-        //    return items;
-        //}
-
 
     }
 }
