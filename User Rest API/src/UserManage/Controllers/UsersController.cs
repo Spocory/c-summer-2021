@@ -39,6 +39,16 @@ namespace UserManage.Controllers
             {
                 return new BadRequestResult();
             }
+
+            if (value.UserEmail == null)
+            {
+                return BadRequest("Failure, Email Missing which is required.");
+            }
+
+            if (value.UserPassword == null)
+            {
+                return BadRequest("Failure, Password Missing which is required.");
+            }
             value.UserId = Guid.NewGuid();
             value.DateAdded = DateTime.UtcNow;
             value.UserPassword = Encrypt.EncryptNow(value.UserPassword);
@@ -53,22 +63,37 @@ namespace UserManage.Controllers
         [HttpPut("{userid}")]
         public IActionResult Put(Guid userid, [FromBody] User value)
         {
+
             var user = users.Where(x => x.UserId == userid).FirstOrDefault();
+
+            if (userid == null)
+            {
+                return BadRequest("UserID Missing");
+            }
+
+            if (user == null)
+            {
+                return BadRequest("UserID Does not exist");
+            }
+
+            if (value.UserPassword == null)
+            {
+
+            }
+            else
+            {
+                user.UserPassword = Encrypt.EncryptNow(value.UserPassword);
+            }
 
             if (value.UserEmail == null)
             {
+
             }
             else
             {
                 user.UserEmail = value.UserEmail;
             }
 
-            if (value.UserPassword == null)
-            { }
-            else
-            {
-                user.UserPassword = value.UserPassword;
-            }
 
 
             var result = new { UserId = user.UserId, Name = user.UserEmail, Success = true };

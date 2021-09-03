@@ -145,7 +145,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:56117/api/users/<guid>",
+					"raw": "http://localhost:56117/api/users/46fc1dbc-9502-48cf-965f-6698a84d1eb9",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,7 +154,7 @@
 					"path": [
 						"api",
 						"users",
-						"<guid>"
+						"46fc1dbc-9502-48cf-965f-6698a84d1eb9"
 					]
 				}
 			},
