@@ -8,6 +8,8 @@ using UserManage.Models;
 
 namespace UserManage.Controllers
 {
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -39,10 +41,11 @@ namespace UserManage.Controllers
             }
             value.UserId = Guid.NewGuid();
             value.DateAdded = DateTime.UtcNow;
+            value.UserPassword = Encrypt.EncryptNow(value.UserPassword);
             users.Add(value);
 
 
-            var result = new { UserId = value.UserId, Success = true };
+            var result = new { UserId = value.UserId, Password_Encrypted = value.UserPassword, Success = true };
             return CreatedAtAction(nameof(Get), new { userid = value.UserId }, result);
         }
 
